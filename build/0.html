@@ -1,0 +1,42 @@
+
+    <title>Shiki</title>
+    <link rel="stylesheet" href="style.css">
+    <hr>
+<h2>title: Use golangci-lint with your lsp in neovim
+description: Configure your Neovim lsp to use golangci-lint for your golang linter</h2>
+<h1>Use golangci-lint with nvim-lspconfig in neovim</h1>
+<h2>Install golangci-lint and the golangci-lint languageserver</h2>
+<p>In your terminal. Install golangci-lint and golangci-lint-langserver</p>
+<pre class="shiki" style="background-color: #2e3440ff"><code><span class="line"><span style="color: #d8dee9ff">	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest</span></span>
+<span class="line"><span style="color: #d8dee9ff">	go install github.com/nametake/golangci-lint-langserver@latest</span></span>
+<span class="line"><span style="color: #d8dee9ff"></span></span></code></pre>
+<h2>Setup your Neovim config</h2>
+<p>I use <code>go-vim</code> and <code>nvim-lspconfig</code></p>
+<p>init.vim</p>
+<pre class="shiki" style="background-color: #2e3440ff"><code><span class="line"><span style="color: #d8dee9ff">let g:go_metalinter_command = &quot;golangci-lint&quot;</span></span>
+<span class="line"><span style="color: #d8dee9ff"></span></span>
+<span class="line"><span style="color: #d8dee9ff">  -- https://github.com/nametake/golangci-lint-langserver</span></span>
+<span class="line"><span style="color: #d8dee9ff">  local configs = require &#39;lspconfig/configs&#39;</span></span>
+<span class="line"><span style="color: #d8dee9ff">  if not configs.golangcilsp then</span></span>
+<span class="line"><span style="color: #d8dee9ff">    configs.golangcilsp = {</span></span>
+<span class="line"><span style="color: #d8dee9ff">      default_config = {</span></span>
+<span class="line"><span style="color: #d8dee9ff">        cmd = {&#39;golangci-lint-langserver&#39;},</span></span>
+<span class="line"><span style="color: #d8dee9ff">        root_dir = lspconfig.util.root_pattern(&#39;.git&#39;, &#39;go.mod&#39;),</span></span>
+<span class="line"><span style="color: #d8dee9ff">        init_options = {</span></span>
+<span class="line"><span style="color: #d8dee9ff">          command = { &quot;golangci-lint&quot;, &quot;run&quot;, &quot;--fast&quot;, &quot;--disable&quot;, &quot;lll&quot;, &quot;--out-format&quot;, &quot;json&quot;, &quot;--issues-exit-code=1&quot; };</span></span>
+<span class="line"><span style="color: #d8dee9ff">          }</span></span>
+<span class="line"><span style="color: #d8dee9ff">        };</span></span>
+<span class="line"><span style="color: #d8dee9ff">      }</span></span>
+<span class="line"><span style="color: #d8dee9ff">  end</span></span>
+<span class="line"><span style="color: #d8dee9ff"></span></span>
+<span class="line"><span style="color: #d8dee9ff">  lspconfig.golangci_lint_ls.setup {</span></span>
+<span class="line"><span style="color: #d8dee9ff">    filetypes = {&#39;go&#39;,&#39;gomod&#39;}</span></span>
+<span class="line"><span style="color: #d8dee9ff">  }</span></span>
+<span class="line"><span style="color: #d8dee9ff"></span></span>
+<span class="line"><span style="color: #d8dee9ff"></span></span></code></pre>
+<p>Now when you open a golang file, nvim-lspconfig will dispatch to
+golangci-lint-langserver for linting rules. By default, it will look for your
+projects <code>.golangci.toml</code> for linting configuration.</p>
+
+    <script src="index.js"></script>
+    

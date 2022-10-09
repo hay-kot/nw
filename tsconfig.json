@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "removeComments": true,
+    "target": "es6",
+
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+
+    "sourceMap": true,
+
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "useDefineForClassFields": true,
+    "module": "CommonJs",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client", "node", "jest"],
+
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "node_modules", "test/**", ".history/**"]
+}
