@@ -7,12 +7,16 @@ import {
 } from 'fs/promises';
 
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { micromark } from 'micromark';
 import { frontmatter, frontmatterHtml } from 'micromark-extension-frontmatter';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const CONTENT_PATH = path.join(__dirname, 'content');
 const BUILD_PATH = path.join(__dirname, 'build');
+
 
 // run the generator
 const run = async () => {
